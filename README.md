@@ -1,4 +1,4 @@
-A horrbile inefficient yet completely functional banner maker for Minecraft.
+A horrbily inefficient yet completely functional banner maker for Minecraft.
 
 The actual coding took around an hour, but putting each pattern in manually took around 4-5 hours of work after that.
 
