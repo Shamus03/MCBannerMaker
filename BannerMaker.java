@@ -45,6 +45,8 @@ class BannerEditor extends JPanel
         this.parent = parent;
         int i;
         JComboBox comboBox;
+        JComboBox colorBox;
+        JComboBox styleBox;
         JPanel panel;
 
         setLayout(new GridLayout(2 + Banner.NUM_LAYERS, 1));
@@ -72,23 +74,26 @@ class BannerEditor extends JPanel
         {
             add(new JLabel("Layer " + (i + 1) + ":"));
 
-            comboBox = new JComboBox(Banner.Style.values());
-            comboBox.addItemListener(new StyleChangedListener(
-                parent.getBanner().getLayer(i)));
-            layerStyles[i] = comboBox;
+            styleBox = new JComboBox(Banner.Style.values());
+            layerStyles[i] = styleBox;
             
             panel = new JPanel();
-            panel.add(comboBox);
+            panel.add(styleBox);
             add(panel);
             
-            comboBox = new JComboBox(Banner.BannerColor.values());
-            comboBox.addItemListener(new ColorChangedListener(
+            colorBox = new JComboBox(Banner.BannerColor.values());
+
+            styleBox.addItemListener(new StyleChangedListener(
+                parent.getBanner().getLayer(i), colorBox));
+
+            colorBox.addItemListener(new ColorChangedListener(
                 parent.getBanner().getLayer(i)));
-            comboBox.setSelectedItem(Banner.BannerColor.RED);
-            layerColors[i] = comboBox;
+            colorBox.setSelectedItem(Banner.BannerColor.RED);
+            layerColors[i] = colorBox;
+            colorBox.setEnabled(false);
 
             panel = new JPanel();
-            panel.add(comboBox);
+            panel.add(colorBox);
             add(panel);
         }
     }
@@ -1070,16 +1075,25 @@ class ColorChangedListener implements ItemListener
 class StyleChangedListener implements ItemListener
 {
     Styleable item;
+    JComboBox box;
 
-    public StyleChangedListener(Styleable item)
+    public StyleChangedListener(Styleable item, JComboBox box)
     {
         this.item = item;
+        this.box = box;
     }
 
     public void itemStateChanged(ItemEvent itemEvent)
     {
         if (itemEvent.getStateChange() == itemEvent.SELECTED)
-            item.setStyle((Banner.Style)itemEvent.getItem());
+        {
+            Banner.Style style = (Banner.Style)itemEvent.getItem();
+            item.setStyle(style);
+            if (style == Banner.Style.BLANK)
+                box.setEnabled(false);
+            else
+                box.setEnabled(true);
+        }
     }
 }
 
