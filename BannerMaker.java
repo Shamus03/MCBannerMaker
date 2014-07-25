@@ -1,6 +1,6 @@
 import java.awt.*;
-import java.awt.Color;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 public class BannerMaker extends JFrame
@@ -37,22 +37,21 @@ public class BannerMaker extends JFrame
 class BannerEditor extends JPanel
 {
     private BannerMaker parent;
+    JComboBox comboBox;
+    JComboBox colorBox;
+    JComboBox styleBox;
+    
+    JComboBox[] layerStyles = new JComboBox[Banner.NUM_LAYERS];
+    JComboBox[] layerColors = new JComboBox[Banner.NUM_LAYERS];
 
     public BannerEditor(BannerMaker parent)
     {
         setPreferredSize(new Dimension(550, 500));
 
         this.parent = parent;
-        int i;
-        JComboBox comboBox;
-        JComboBox colorBox;
-        JComboBox styleBox;
-        JPanel panel;
+        int i;       
+        setLayout(new GridLayout(3 + Banner.NUM_LAYERS, 1));
 
-        setLayout(new GridLayout(2 + Banner.NUM_LAYERS, 1));
-
-        JComboBox[] layerStyles = new JComboBox[Banner.NUM_LAYERS];
-        JComboBox[] layerColors = new JComboBox[Banner.NUM_LAYERS];
 
         add(new JPanel());
         add(new JLabel("Style"));
@@ -65,7 +64,7 @@ class BannerEditor extends JPanel
         comboBox.addItemListener(new ColorChangedListener(parent.getBanner()));
         comboBox.setSelectedItem(Banner.BannerColor.WHITE);
 
-        panel = new JPanel();
+        JPanel panel = new JPanel();
         panel.add(comboBox);
         add(panel);
 
@@ -77,9 +76,9 @@ class BannerEditor extends JPanel
             styleBox = new JComboBox(Banner.Style.values());
             layerStyles[i] = styleBox;
             
-            panel = new JPanel();
-            panel.add(styleBox);
-            add(panel);
+            JPanel comboPanel = new JPanel();
+            comboPanel.add(styleBox);
+            add(comboPanel);
             
             colorBox = new JComboBox(Banner.BannerColor.values());
 
@@ -92,10 +91,25 @@ class BannerEditor extends JPanel
             layerColors[i] = colorBox;
             colorBox.setEnabled(false);
 
-            panel = new JPanel();
-            panel.add(colorBox);
-            add(panel);
+            comboPanel = new JPanel();
+            comboPanel.add(colorBox);
+            add(comboPanel);
         }
+        
+        JPanel buttonPanel = new JPanel();
+        JButton btnReset = new JButton("Reset Fields");
+        buttonPanel.add(btnReset);
+        btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				comboBox.setSelectedIndex(15);
+				for (int i = 0; i < Banner.NUM_LAYERS; i++)		
+				{
+					layerStyles[i].setSelectedIndex(0);
+					layerColors[i].setSelectedIndex(0);					
+				}
+			}
+		});
+        add(buttonPanel);
     }
 }
 
