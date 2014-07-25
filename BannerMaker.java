@@ -300,90 +300,56 @@ class Banner implements Colorable
                     break;
                 case UPPER_LEFT_SQUARE:
                     g.fillRect(x, y, 90, 130);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 90, 10);
-                    g.fillRect(x, y + 10, 10, 120);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 90, y, 10, 130);
                     g.fillRect(x, y + 130, 100, 10);
                     break;
                 case UPPER_RIGHT_SQUARE:
                     g.fillRect(x + 110, y, 90, 130);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x + 110, y, 90, 10);
-                    g.fillRect(x + 190, y + 10, 10, 120);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 100, y, 10, 130);
                     g.fillRect(x + 100, y + 130, 100, 10);
                     break;
                 case LOWER_LEFT_SQUARE:
                     g.fillRect(x, y + 270, 90, 130);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y + 390, 90, 10);
-                    g.fillRect(x, y + 270, 10, 120);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 90, y + 270, 10, 130);
                     g.fillRect(x, y + 260, 100, 10);
                     break;
                 case LOWER_RIGHT_SQUARE:
                     g.fillRect(x + 110, y + 270, 90, 130);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x + 110, y + 390, 90, 10);
-                    g.fillRect(x + 190, y + 270, 10, 120);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 100, y + 270, 10, 130);
                     g.fillRect(x + 100, y + 260, 100, 10);
                     break;
                 case BOTTOM_STRIPE:
                     g.fillRect(x, y + 270, 200, 130);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y + 390, 200, 10);
-                    g.fillRect(x, y + 270, 10, 120);
-                    g.fillRect(x + 190, y + 270, 10, 120);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x, y + 260, 200, 10);
                     break;
                 case TOP_STRIPE:
                     g.fillRect(x, y, 200, 130);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 200, 10);
-                    g.fillRect(x, y + 10, 10, 120);
-                    g.fillRect(x + 190, y + 10, 10, 120);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x, y + 130, 200, 10);
                     break;
                 case LEFT_STRIPE:
                     g.fillRect(x, y, 60, 400);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 10, 400);
-                    g.fillRect(x + 10, y, 50, 10);
-                    g.fillRect(x + 10, y + 390, 50, 10);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 60, y, 10, 400);
                     break;
                 case RIGHT_STRIPE:
                     g.fillRect(x + 140, y, 60, 400);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x + 190, y, 10, 400);
-                    g.fillRect(x + 140, y, 50, 10);
-                    g.fillRect(x + 140, y + 390, 50, 10);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 130, y, 10, 400);
                     break;
                 case CENTER_STRIPE:
                     g.fillRect(x + 80, y, 40, 400);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x + 80, y, 40, 10);
-                    g.fillRect(x + 80, y + 390, 40, 10);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 70, y, 10, 400);
                     g.fillRect(x + 120, y, 10, 400);
                 break;
                 case MIDDLE_STRIPE:
                     g.fillRect(x, y + 180, 200, 40);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y + 180, 10, 40);
-                    g.fillRect(x + 190, y + 180, 10, 40);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x, y + 170, 200, 10);
                     g.fillRect(x, y + 220, 200, 10);
@@ -391,11 +357,6 @@ class Banner implements Colorable
                 case DOWN_RIGHT_DIAGONAL:
                     for (i = 0; i < 18; i++)
                         g.fillRect(x + 10 * i, y + 20 * i, 30, 60);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 10, 60);
-                    g.fillRect(x + 10, y, 20, 10);
-                    g.fillRect(x + 190, y + 340, 10, 50);
-                    g.fillRect(x + 170, y + 390, 30, 10);
                     g.setColor(getMaskColor(color));
                     for (i = 0; i < 17; i++)
                     {
@@ -406,11 +367,6 @@ class Banner implements Colorable
                 case DOWN_LEFT_DIAGONAL:
                     for (i = 0; i < 18; i++)
                         g.fillRect(x + 170 - 10 * i, y + 20 * i, 30, 60);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x + 190, y, 10, 60);
-                    g.fillRect(x + 170, y, 20, 10);
-                    g.fillRect(x, y + 340, 10, 50);
-                    g.fillRect(x, y + 390, 30, 10);
                     g.setColor(getMaskColor(color));
                     for (i = 0; i < 17; i++)
                     {
@@ -423,9 +379,6 @@ class Banner implements Colorable
                     {
                         g.setColor(color);
                         g.fillRect(x + 20 + 50 * i, y, 10, 400);
-                        g.setColor(Banner.MASK);
-                        g.fillRect(x + 20 + 50 * i, y, 10, 10);
-                        g.fillRect(x + 20 + 50 * i, y + 390, 10, 10);
                         g.setColor(getMaskColor(color));
                         g.fillRect(x + 10 + 50 * i, y, 10, 400);
                         g.fillRect(x + 30 + 50 * i, y, 10, 400);
@@ -457,17 +410,6 @@ class Banner implements Colorable
                         g.fillRect(x + j, y + 40 + 20 * i, 10, 20);
                         g.fillRect(x + 190 - j, y + 40 + 20 * i, 10, 20);
                     }
-
-                    g.setColor(Banner.MASK);
-
-                    g.fillRect(x, y, 20, 10);
-                    g.fillRect(x, y + 10, 10, 30);
-                    g.fillRect(x, y + 360, 10, 30);
-                    g.fillRect(x, y + 390, 20, 10);
-                    g.fillRect(x + 180, y, 20, 10);
-                    g.fillRect(x + 190, y + 10, 10, 30);
-                    g.fillRect(x + 180, y + 390, 20, 10);
-                    g.fillRect(x + 190, y + 360, 10, 30);
                     break;
                 case STRAIGHT_CROSS:
                     g.setColor(getMaskColor(color));
@@ -478,12 +420,6 @@ class Banner implements Colorable
                     g.setColor(color);
                     g.fillRect(x + 90, y, 20, 400);
                     g.fillRect(x, y + 190, 200, 20);
-
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y + 190, 10, 20);
-                    g.fillRect(x + 90, y, 20, 10);
-                    g.fillRect(x + 190, y + 190, 10, 20);
-                    g.fillRect(x + 90, y + 390, 20, 10);
                     break;
                 case BORDER:
                     g.fillRect(x, y, 200, 20);
@@ -496,12 +432,6 @@ class Banner implements Colorable
                     g.fillRect(x + 20, y + 370, 160, 10);
                     g.fillRect(x + 20, y + 30, 10, 340);
                     g.fillRect(x + 170, y + 30, 10, 340);
-
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 200, 10);
-                    g.fillRect(x, y + 390, 200, 10);
-                    g.fillRect(x, y + 10, 10, 380);
-                    g.fillRect(x + 190, y + 10, 10, 380);
                     break;
                 case CURLY_BORDER:
                     g.setColor(getMaskColor(color));
@@ -617,23 +547,6 @@ class Banner implements Colorable
                     g.fillRect(x + 190, y + 210, 10, 80);
                     g.fillRect(x + 180, y + 230, 20, 40);
                     g.fillRect(x + 160, y + 240, 40, 20);
-
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 90, 10);
-                    g.fillRect(x, y + 10, 10, 80);
-                    g.fillRect(x, y + 110, 10, 80);
-
-                    g.fillRect(x + 110, y, 90, 10);
-                    g.fillRect(x + 190, y + 10, 10, 80);
-                    g.fillRect(x + 190, y + 110, 10, 80);
-
-                    g.fillRect(x, y + 390, 90, 10);
-                    g.fillRect(x, y + 310, 10, 80);
-                    g.fillRect(x, y + 210, 10, 80);
-
-                    g.fillRect(x + 110, y + 390, 90, 10);
-                    g.fillRect(x + 190, y + 310, 10, 80);
-                    g.fillRect(x + 190, y + 210, 10, 80);
                     break;
                 case BOTTOM_TRIANGLE:
                     for (i = 0; i < 10; i++)
@@ -655,8 +568,6 @@ class Banner implements Colorable
                                 10, 10);
                         }
                     }
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y + 390, 200, 10);
                     break;
                 case TOP_TRIANGLE:
                     for (i = 0; i < 10; i++)
@@ -678,8 +589,6 @@ class Banner implements Colorable
                                 10, 10);
                         }
                     }
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 200, 10);
                     break;
                 case BOTTOM_SAW:
                     g.fillRect(x, y + 390, 200, 10);
@@ -698,8 +607,6 @@ class Banner implements Colorable
                     }
                     g.fillRect(x + 60, y + 380, 10, 10);
                     g.fillRect(x + 130, y + 380, 10, 10);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y + 390, 200, 10);
                     break;
                 case TOP_SAW:
                     g.fillRect(x, y, 200, 10);
@@ -718,8 +625,6 @@ class Banner implements Colorable
                     }
                     g.fillRect(x + 60, y + 10, 10, 10);
                     g.fillRect(x + 130, y + 10, 10, 10);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 200, 10);
                     break;
                 case LEFT_DIAGONAL:
                     for (i = 0; i < 19; i++)
@@ -727,9 +632,6 @@ class Banner implements Colorable
                     g.setColor(getMaskColor(color));
                     for (i = 0; i < 20; i++)
                         g.fillRect(x + i * 10, y + 380 - i * 20, 10, 20);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x + 10, y, 180, 10);
-                    g.fillRect(x, y, 10, 380);
                     break;
                 case RIGHT_DIAGONAL:
                     for (i = 0; i < 19; i++)
@@ -738,9 +640,6 @@ class Banner implements Colorable
                     g.setColor(getMaskColor(color));
                     for (i = 0; i < 20; i++)
                         g.fillRect(x + 190 - i * 10, y + 380 - i * 20, 10, 20);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x + 10, y, 180, 10);
-                    g.fillRect(x + 190, y, 10, 380);
                     break;
                 case CIRCLE:
                     g.setColor(getMaskColor(color));
@@ -775,19 +674,11 @@ class Banner implements Colorable
                     g.fillRect(x, y, 100, 400);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 100, y, 10, 400);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x + 10, y, 90, 10);
-                    g.fillRect(x + 10, y + 390, 90, 10);
-                    g.fillRect(x, y, 10, 400);
                     break;
                 case HORIZONTAL_HALF:
                     g.fillRect(x, y, 200, 200);
                     g.setColor(getMaskColor(color));
                     g.fillRect(x, y + 200, 200, 10);
-                    g.setColor(Banner.MASK);
-                    g.fillRect(x, y, 10, 200);
-                    g.fillRect(x + 190, y, 10, 200);
-                    g.fillRect(x + 10, y, 180, 10);
                     break;
                 case CREEPER:
                     g.setColor(getMaskColor(color));
