@@ -1,26 +1,30 @@
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Dimension;
-import java.awt.GridLayout;
 
 public class BannerEditor extends JPanel {
     private BannerMaker parent;
+    
+    JComboBox comboBox;
+    JComboBox colorBox;
+    JComboBox styleBox;
+    
+    JComboBox[] layerStyles = new JComboBox[Banner.NUM_LAYERS];
+    JComboBox[] layerColors = new JComboBox[Banner.NUM_LAYERS];
 
     public BannerEditor(BannerMaker parent) {
         setPreferredSize(new Dimension(550, 500));
 
         this.parent = parent;
         int i;
-        JComboBox comboBox;
-        JComboBox colorBox;
-        JComboBox styleBox;
+      
         JPanel panel;
-
-        setLayout(new GridLayout(2 + Banner.NUM_LAYERS, 1));
-
-        JComboBox[] layerStyles = new JComboBox[Banner.NUM_LAYERS];
-        JComboBox[] layerColors = new JComboBox[Banner.NUM_LAYERS];
+        setLayout(new GridLayout(3 + Banner.NUM_LAYERS, 1));       
 
         add(new JPanel());
         add(new JLabel("Style"));
@@ -63,6 +67,23 @@ public class BannerEditor extends JPanel {
             panel.add(colorBox);
             add(panel);
         }
+        
+        
+        JPanel buttonPanel = new JPanel();
+        JButton btnReset = new JButton("Reset Fields");
+        buttonPanel.add(btnReset);
+        btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				comboBox.setSelectedIndex(Banner.BannerColor.WHITE.ordinal()); 
+				for (int i = 0; i < Banner.NUM_LAYERS; i++)		
+				{
+					layerStyles[i].setSelectedIndex(Banner.Style.BLANK.ordinal()); 
+					layerColors[i].setSelectedIndex(Banner.BannerColor.RED.ordinal());			
+				}
+			}
+		});
+        
+        add(buttonPanel);
     }
 
 }
