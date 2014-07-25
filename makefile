@@ -1,8 +1,7 @@
 all: BannerMaker.jar
 
-
-BannerMaker.class: BannerMaker.java
-	javac -source 1.6 -target 1.6 BannerMaker.java
+BannerMaker.class: src/*.java
+	javac -source 1.6 -target 1.6 -d . src/*.java
 
 BannerMaker.jar: BannerMaker.class
 	jar cfe BannerMaker.jar BannerMaker *.class

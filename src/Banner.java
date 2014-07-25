@@ -1,133 +1,11 @@
-import java.awt.*;
 import java.awt.Color;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Graphics;
 
-public class BannerMaker extends JFrame
-{
-    public static BannerMaker window;
-    private Banner banner;
+public class Banner implements Colorable {
 
-    public static void main(String args[])
-    {
-        window = new BannerMaker();
-        window.setVisible(true);
-    }
-
-    public BannerMaker()
-    {
-        super("Banner Maker");
-        setSize(900, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setResizable(false);
-
-        banner = new Banner(Banner.BannerColor.BLACK.getColor());
-
-        add(new BannerPanel(this), BorderLayout.WEST);
-        add(new BannerEditor(this), BorderLayout.EAST);
-    }
-
-    public Banner getBanner()
-    {
-        return banner;
-    }
-}
-
-class BannerEditor extends JPanel
-{
-    private BannerMaker parent;
-
-    public BannerEditor(BannerMaker parent)
-    {
-        setPreferredSize(new Dimension(550, 500));
-
-        this.parent = parent;
-        int i;
-        JComboBox comboBox;
-        JComboBox colorBox;
-        JComboBox styleBox;
-        JPanel panel;
-
-        setLayout(new GridLayout(2 + Banner.NUM_LAYERS, 1));
-
-        JComboBox[] layerStyles = new JComboBox[Banner.NUM_LAYERS];
-        JComboBox[] layerColors = new JComboBox[Banner.NUM_LAYERS];
-
-        add(new JPanel());
-        add(new JLabel("Style"));
-        add(new JLabel("Color"));
-
-        add(new JLabel("Background:"));
-        add(new JLabel("N/A"));
-
-        comboBox = new JComboBox(Banner.BannerColor.values());
-        comboBox.addItemListener(new ColorChangedListener(parent.getBanner()));
-        comboBox.setSelectedItem(Banner.BannerColor.WHITE);
-
-        panel = new JPanel();
-        panel.add(comboBox);
-        add(panel);
-
-
-        for (i = 0; i < Banner.NUM_LAYERS; i++)
-        {
-            add(new JLabel("Layer " + (i + 1) + ":"));
-
-            styleBox = new JComboBox(Banner.Style.values());
-            layerStyles[i] = styleBox;
-            
-            panel = new JPanel();
-            panel.add(styleBox);
-            add(panel);
-            
-            colorBox = new JComboBox(Banner.BannerColor.values());
-
-            styleBox.addItemListener(new StyleChangedListener(
-                parent.getBanner().getLayer(i), colorBox));
-
-            colorBox.addItemListener(new ColorChangedListener(
-                parent.getBanner().getLayer(i)));
-            colorBox.setSelectedItem(Banner.BannerColor.RED);
-            layerColors[i] = colorBox;
-            colorBox.setEnabled(false);
-
-            panel = new JPanel();
-            panel.add(colorBox);
-            add(panel);
-        }
-    }
-}
-
-class BannerPanel extends JPanel
-{
-    public static final Color background = new Color(150, 150, 100);
-
-    private BannerMaker parent;
-
-    public BannerPanel(BannerMaker parent)
-    {
-        setPreferredSize(new Dimension(300, 500));
-        setBackground(background);
-        this.parent = parent;
-    }
-
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-
-        parent.getBanner().draw(g, 50, 35);
-
-        repaint();
-    }
-}
-
-class Banner implements Colorable
-{
     public static final int NUM_LAYERS = 6;
 
-    static enum Style
-    {
+    static enum Style {
         BLANK("Blank"),
         UPPER_LEFT_SQUARE("Upper Left Square"),
         UPPER_RIGHT_SQUARE("Upper Right Square"),
@@ -164,21 +42,19 @@ class Banner implements Colorable
         MOJANG_LOGO("Mojang Logo");
 
         private String string;
-        Style(String string)
-        {
+
+        Style(String string) {
             this.string = string;
         }
 
-        public String toString()
-        {
+        public String toString() {
             return string;
         }
     }
 
     static final Color MASK = new Color(0, 0, 0, 20);
 
-    static enum BannerColor
-    {
+    static enum BannerColor {
         BLACK(0x191919, "Black"),
         RED(0x993333, "Red"),
         GREEN(0x667F33, "Green"),
@@ -198,19 +74,19 @@ class Banner implements Colorable
 
         private Color color;
         private String string;
-        BannerColor(int color, String string)
-        {
+
+        BannerColor(int color, String string) {
             this.color = new Color(color);
             this.string = string;
         }
 
-        public Color getColor()
-        {
+        public Color getColor() {
+
+
             return color;
         }
 
-        public String toString()
-        {
+        public String toString() {
             return string;
         }
     }
@@ -219,26 +95,22 @@ class Banner implements Colorable
     private Color baseColor;
     private Layer[] layers = new Layer[NUM_LAYERS];
 
-    public Banner(Color baseColor)
-    {
+    public Banner(Color baseColor) {
         this.baseColor = baseColor;
 
         for (int i = 0; i < NUM_LAYERS; i++)
             layers[i] = new Layer(Style.BLANK, baseColor);
     }
 
-    public void setColor(Color color)
-    {
+    public void setColor(Color color) {
         this.baseColor = color;
     }
-    
-    public Color getColor()
-    {
+
+    public Color getColor() {
         return baseColor;
     }
 
-    public void draw(Graphics g, int x, int y)
-    {
+    public void draw(Graphics g, int x, int y) {
         g.setColor(baseColor);
         g.fillRect(x, y, 200, 400);
         g.setColor(Banner.MASK);
@@ -247,35 +119,30 @@ class Banner implements Colorable
         g.fillRect(x, y + 10, 10, 380);
         g.fillRect(x + 190, y + 10, 10, 380);
 
-        for(int i = 0; i < NUM_LAYERS; i++)
+        for (int i = 0; i < NUM_LAYERS; i++)
             layers[i].draw(g, x, y);
     }
 
-    public Layer getLayer(int i)
-    {
+    public Layer getLayer(int i) {
         return layers[i];
     }
 
-    class Layer implements Colorable, Styleable
-    {
+    class Layer implements Colorable, Styleable {
         private Style style;
         private Color color;
 
-        public Layer(Style style, Color color)
-        {
+        public Layer(Style style, Color color) {
             this.style = style;
-            this.color = color; 
+            this.color = color;
         }
-        
-        public void draw(Graphics g, int x, int y)
-        {
+
+        public void draw(Graphics g, int x, int y) {
             g.setColor(color);
 
             int i;
             int j;
 
-            switch(style)
-            {
+            switch (style) {
                 case BLANK:
                     break;
                 case UPPER_LEFT_SQUARE:
@@ -358,7 +225,7 @@ class Banner implements Colorable
                     g.setColor(getMaskColor(color));
                     g.fillRect(x + 70, y, 10, 400);
                     g.fillRect(x + 120, y, 10, 400);
-                break;
+                    break;
                 case MIDDLE_STRIPE:
                     g.fillRect(x, y + 180, 200, 40);
                     g.setColor(Banner.MASK);
@@ -377,10 +244,9 @@ class Banner implements Colorable
                     g.fillRect(x + 190, y + 340, 10, 50);
                     g.fillRect(x + 170, y + 390, 30, 10);
                     g.setColor(getMaskColor(color));
-                    for (i = 0; i < 17; i++)
-                    {
+                    for (i = 0; i < 17; i++) {
                         g.fillRect(x + 10 * i, y + 60 + 20 * i, 10, 20);
-                        g.fillRect(x + 30 + 10 * i, y + 20 * i, 10, 20); 
+                        g.fillRect(x + 30 + 10 * i, y + 20 * i, 10, 20);
                     }
                     break;
                 case DOWN_LEFT_DIAGONAL:
@@ -392,15 +258,13 @@ class Banner implements Colorable
                     g.fillRect(x, y + 340, 10, 50);
                     g.fillRect(x, y + 390, 30, 10);
                     g.setColor(getMaskColor(color));
-                    for (i = 0; i < 17; i++)
-                    {
+                    for (i = 0; i < 17; i++) {
                         g.fillRect(x + 190 - 10 * i, y + 60 + 20 * i, 10, 20);
-                        g.fillRect(x + 160 - 10 * i, y + 20 * i, 10, 20); 
+                        g.fillRect(x + 160 - 10 * i, y + 20 * i, 10, 20);
                     }
                     break;
                 case SMALL_STRIPES:
-                    for (i = 0; i < 4; i++)
-                    {
+                    for (i = 0; i < 4; i++) {
                         g.setColor(color);
                         g.fillRect(x + 20 + 50 * i, y, 10, 400);
                         g.setColor(Banner.MASK);
@@ -413,8 +277,7 @@ class Banner implements Colorable
                     break;
                 case CROSS:
                     j = 0;
-                    for (i = 0; i < 19; i++)
-                    {
+                    for (i = 0; i < 19; i++) {
                         j = 180 - Math.abs(180 - 20 * i);
                         g.fillRect(x + 10 * i, y + j, 20, 40);
                         g.fillRect(x + 10 * i, y + 360 - j, 20, 40);
@@ -423,16 +286,14 @@ class Banner implements Colorable
                     g.setColor(getMaskColor(color));
 
                     j = 0;
-                    for (i = 0; i < 16; i++)
-                    {
+                    for (i = 0; i < 16; i++) {
                         j = 150 - Math.abs(150 - 20 * i);
                         g.fillRect(x + 20 + 10 * i, y + j, 10, 20);
                         g.fillRect(x + 20 + 10 * i, y + 380 - j, 10, 20);
                     }
 
                     j = 0;
-                    for (i = 0; i < 16; i++)
-                    {
+                    for (i = 0; i < 16; i++) {
                         j = 75 - Math.abs(75 - 10 * i);
                         g.fillRect(x + j, y + 40 + 20 * i, 10, 20);
                         g.fillRect(x + 190 - j, y + 40 + 20 * i, 10, 20);
@@ -523,7 +384,7 @@ class Banner implements Colorable
                     g.fillRect(x + 130, y, 70, 20);
                     g.fillRect(x + 110, y, 90, 10);
 
-                    
+
                     g.setColor(getMaskColor(color));
                     g.fillRect(x, y + 310, 20, 90);
                     g.fillRect(x, y + 330, 40, 70);
@@ -616,46 +477,38 @@ class Banner implements Colorable
                     g.fillRect(x + 190, y + 210, 10, 80);
                     break;
                 case BOTTOM_TRIANGLE:
-                    for (i = 0; i < 10; i++)
-                    {
+                    for (i = 0; i < 10; i++) {
                         g.setColor(color);
                         g.fillRect(x + 10 * i, y + 390 - 20 * i,
-                            20 * (10 - i), 10 + 20 * i);
+                                20 * (10 - i), 10 + 20 * i);
                         g.setColor(getMaskColor(color));
-                        if (i < 9)
-                        {
+                        if (i < 9) {
                             g.fillRect(x + 10 * i, y + 370 - 20 * i, 10, 20);
                             g.fillRect(x + 190 - 10 * i, y + 370 - 20 * i,
-                                10, 20);
-                        }
-                        else
-                        {
+                                    10, 20);
+                        } else {
                             g.fillRect(x + 10 * i, y + 380 - 20 * i, 10, 10);
                             g.fillRect(x + 190 - 10 * i, y + 380 - 20 * i,
-                                10, 10);
+                                    10, 10);
                         }
                     }
                     g.setColor(Banner.MASK);
                     g.fillRect(x, y + 390, 200, 10);
                     break;
                 case TOP_TRIANGLE:
-                    for (i = 0; i < 10; i++)
-                    {
+                    for (i = 0; i < 10; i++) {
                         g.setColor(color);
                         g.fillRect(x + 10 * i, y,
-                            20 * (10 - i), 10 + 20 * i);
+                                20 * (10 - i), 10 + 20 * i);
                         g.setColor(getMaskColor(color));
-                        if (i < 9)
-                        {
+                        if (i < 9) {
                             g.fillRect(x + 10 * i, y + 10 + 20 * i, 10, 20);
                             g.fillRect(x + 190 - 10 * i, y + 10 + 20 * i,
-                                10, 20);
-                        }
-                        else
-                        {
+                                    10, 20);
+                        } else {
                             g.fillRect(x + 10 * i, y + 10 + 20 * i, 10, 10);
                             g.fillRect(x + 190 - 10 * i, y + 10 + 20 * i,
-                                10, 10);
+                                    10, 10);
                         }
                     }
                     g.setColor(Banner.MASK);
@@ -663,8 +516,7 @@ class Banner implements Colorable
                     break;
                 case BOTTOM_SAW:
                     g.fillRect(x, y + 390, 200, 10);
-                    for (i = 0; i < 3; i++)
-                    {
+                    for (i = 0; i < 3; i++) {
                         g.setColor(color);
                         g.fillRect(x + 70 * i, y + 380, 60, 20);
                         g.fillRect(x + 10 + 70 * i, y + 360, 40, 20);
@@ -683,8 +535,7 @@ class Banner implements Colorable
                     break;
                 case TOP_SAW:
                     g.fillRect(x, y, 200, 10);
-                    for (i = 0; i < 3; i++)
-                    {
+                    for (i = 0; i < 3; i++) {
                         g.setColor(color);
                         g.fillRect(x + 70 * i, y, 60, 20);
                         g.fillRect(x + 10 + 70 * i, y + 20, 40, 20);
@@ -714,7 +565,7 @@ class Banner implements Colorable
                 case RIGHT_DIAGONAL:
                     for (i = 0; i < 19; i++)
                         g.fillRect(x + 190 - i * 10, y,
-                            10 + i * 10, 380 - i * 20);
+                                10 + i * 10, 380 - i * 20);
                     g.setColor(getMaskColor(color));
                     for (i = 0; i < 20; i++)
                         g.fillRect(x + 190 - i * 10, y + 380 - i * 20, 10, 20);
@@ -736,18 +587,15 @@ class Banner implements Colorable
                     g.fillRect(x + 50, y + 190, 100, 20);
                     break;
                 case RHOMBUS:
-                    for (i = 0; i < 7; i++)
-                    {
+                    for (i = 0; i < 7; i++) {
                         g.setColor(getMaskColor(color));
-                        if (i < 6)
-                        {
+                        if (i < 6) {
                             g.fillRect(x + 30 + 10 * i, y + 190 - 20 * i,
-                                140 - 20 * i, 20 + 40 * i);
+                                    140 - 20 * i, 20 + 40 * i);
                             g.setColor(color);
                             g.fillRect(x + 40 + 10 * i, y + 190 - 20 * i,
-                                120 - 20 * i, 20 + 40 * i);
-                        }
-                        else
+                                    120 - 20 * i, 20 + 40 * i);
+                        } else
                             g.fillRect(x + 90, y + 80, 20, 240);
                     }
                     break;
@@ -786,19 +634,17 @@ class Banner implements Colorable
                     break;
                 case BRICKS:
                     int offset;
-                    for (i = 0; i < 10; i++)
-                    {
+                    for (i = 0; i < 10; i++) {
                         offset = i % 2 * 30;
 
-                        for (j = 0; j < 4; j++)
-                        {
+                        for (j = 0; j < 4; j++) {
                             g.setColor(getMaskColor(color));
                             g.fillRect(x + 60 * j - offset, y + i * 40, 50, 30);
                             g.setColor(color);
                             g.fillRect(x + 60 * j - offset, y + i * 40, 40, 20);
                             g.setColor(getMaskColor(color));
                             g.fillRect(x + 40 + 60 * j - offset, y + i * 40,
-                                10, 10);
+                                    10, 10);
                         }
                     }
                     g.setColor(BannerPanel.background);
@@ -806,11 +652,10 @@ class Banner implements Colorable
                     g.fillRect(x + 200, y, 30, 400);
                     break;
                 case GRADIENT:
-                    for (i = 0; i < 40; i++)
-                    {
+                    for (i = 0; i < 40; i++) {
                         g.setColor(new Color(
-                            color.getRed(), color.getGreen(), color.getBlue(),
-                            (int)((40 - i) / 40.0 * 255)));
+                                color.getRed(), color.getGreen(), color.getBlue(),
+                                (int) ((40 - i) / 40.0 * 255)));
                         g.fillRect(x, y + i * 10, 200, 10);
                     }
                     g.setColor(getMaskColor(color));
@@ -867,10 +712,10 @@ class Banner implements Colorable
                     g.fillRect(x + 120, y + 260, 20, 10);
 
                     g.setColor(new Color(color.getRed(),
-                                         color.getGreen(),
-                                         color.getBlue(),
-                                         90));
-                    
+                            color.getGreen(),
+                            color.getBlue(),
+                            90));
+
                     g.fillRect(x + 70, y + 160, 20, 10);
                     g.fillRect(x + 90, y + 170, 20, 10);
                     g.fillRect(x + 110, y + 160, 20, 10);
@@ -883,7 +728,7 @@ class Banner implements Colorable
                     g.fillRect(x + 80, y + 170, 40, 60);
                     g.fillRect(x + 70, y + 180, 60, 40);
 
-                    g.fillRect(x + 80, y + 120 , 40, 20);
+                    g.fillRect(x + 80, y + 120, 40, 20);
                     g.fillRect(x + 40, y + 140, 120, 20);
                     g.fillRect(x + 90, y + 110, 20, 10);
 
@@ -896,7 +741,7 @@ class Banner implements Colorable
                     g.fillRect(x + 130, y + 160, 10, 10);
 
 
-                    g.fillRect(x + 80, y + 260 , 40, 20);
+                    g.fillRect(x + 80, y + 260, 40, 20);
                     g.fillRect(x + 40, y + 240, 120, 20);
                     g.fillRect(x + 90, y + 280, 20, 10);
 
@@ -932,7 +777,7 @@ class Banner implements Colorable
 
                     g.setColor(color);
 
-                    g.fillRect(x + 80, y + 180, 40, 40); 
+                    g.fillRect(x + 80, y + 180, 40, 40);
 
                     g.fillRect(x + 90, y + 120, 20, 20);
                     g.fillRect(x + 50, y + 140, 100, 10);
@@ -960,7 +805,7 @@ class Banner implements Colorable
 
                     g.fillRect(x + 20, y + 160, 10, 20);
                     g.fillRect(x + 30, y + 170, 10, 10);
-                    
+
                     g.fillRect(x + 40, y + 170, 10, 60);
 
                     g.fillRect(x + 20, y + 220, 10, 20);
@@ -969,7 +814,7 @@ class Banner implements Colorable
 
                     g.fillRect(x + 170, y + 160, 10, 20);
                     g.fillRect(x + 160, y + 170, 10, 10);
-                    
+
                     g.fillRect(x + 150, y + 170, 10, 60);
 
                     g.fillRect(x + 170, y + 220, 10, 20);
@@ -1021,90 +866,31 @@ class Banner implements Colorable
             }
         }
 
-        public void setStyle(Style newStyle)
-        {
+        public void setStyle(Style newStyle) {
             this.style = newStyle;
         }
 
-        public Style getStyle()
-        {
+        public Style getStyle() {
             return style;
         }
 
-        public void setColor(Color newColor)
-        {
+        public void setColor(Color newColor) {
             this.color = newColor;
         }
 
-        public Color getColor()
-        {
+        public Color getColor() {
             return color;
         }
 
-        private Color getMaskColor(Color color)
-        {
+        private Color getMaskColor(Color color) {
             return new Color(color.getRed(),
-                             color.getGreen(),
-                             color.getBlue(),
-                             180);
+                    color.getGreen(),
+                    color.getBlue(),
+                    180);
         }
 
-        public String toString()
-        {
+        public String toString() {
             return "Style: " + style + "  Color: " + color;
         }
     }
-}
-
-class ColorChangedListener implements ItemListener
-{
-    Colorable item;
-
-    public ColorChangedListener(Colorable item)
-    {
-        this.item = item;
-    }
-
-    public void itemStateChanged(ItemEvent itemEvent)
-    {
-        if (itemEvent.getStateChange() == itemEvent.SELECTED)
-            item.setColor(((Banner.BannerColor)itemEvent.getItem()).getColor());
-    }
-}
-
-class StyleChangedListener implements ItemListener
-{
-    Styleable item;
-    JComboBox box;
-
-    public StyleChangedListener(Styleable item, JComboBox box)
-    {
-        this.item = item;
-        this.box = box;
-    }
-
-    public void itemStateChanged(ItemEvent itemEvent)
-    {
-        if (itemEvent.getStateChange() == itemEvent.SELECTED)
-        {
-            Banner.Style style = (Banner.Style)itemEvent.getItem();
-            item.setStyle(style);
-            if (style == Banner.Style.BLANK)
-                box.setEnabled(false);
-            else
-                box.setEnabled(true);
-        }
-    }
-}
-
-interface Colorable
-{
-    public void setColor(Color color);
-    public Color getColor();
-}
-
-interface Styleable
-{
-    public void setStyle(Banner.Style style);
-    public Banner.Style getStyle();
 }

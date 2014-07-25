@@ -4,5 +4,5 @@ MCBannerMaker.iml
 MCBannerMaker.ipr
 MCBannerMaker.iws
 
-BannerMaker.class
+*.class
 BannerMaker.jar
