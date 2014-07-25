@@ -1,16 +1,19 @@
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 
-public class BannerMaker extends JFrame {
+public class BannerMaker extends JFrame
+{
     public static BannerMaker window;
     private Banner banner;
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         window = new BannerMaker();
         window.setVisible(true);
     }
 
-    public BannerMaker() {
+    public BannerMaker()
+    {
         super("Banner Maker");
         setSize(900, 500);
         setLocationRelativeTo(null);
@@ -23,7 +26,8 @@ public class BannerMaker extends JFrame {
         add(new BannerEditor(this), BorderLayout.EAST);
     }
 
-    public Banner getBanner() {
+    public Banner getBanner()
+    {
         return banner;
     }
 }

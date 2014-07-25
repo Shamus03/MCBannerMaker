@@ -1,11 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Banner implements Colorable {
-
+public class Banner implements Colorable
+{
     public static final int NUM_LAYERS = 6;
 
-    public static enum Style {
+    public static enum Style
+    {
         BLANK("Blank"),
         UPPER_LEFT_SQUARE("Upper Left Square"),
         UPPER_RIGHT_SQUARE("Upper Right Square"),
@@ -43,18 +44,21 @@ public class Banner implements Colorable {
 
         private String string;
 
-        Style(String string) {
+        Style(String string)
+        {
             this.string = string;
         }
 
-        public String toString() {
+        public String toString()
+        {
             return string;
         }
     }
 
     static final Color MASK = new Color(0, 0, 0, 20);
 
-    static enum BannerColor {
+    static enum BannerColor
+    {
         BLACK(0x191919, "Black"),
         RED(0x993333, "Red"),
         GREEN(0x667F33, "Green"),
@@ -75,18 +79,21 @@ public class Banner implements Colorable {
         private Color color;
         private String string;
 
-        BannerColor(int color, String string) {
+        BannerColor(int color, String string)
+        {
             this.color = new Color(color);
             this.string = string;
         }
 
-        public Color getColor() {
+        public Color getColor()
+        {
 
 
             return color;
         }
 
-        public String toString() {
+        public String toString()
+        {
             return string;
         }
     }
@@ -95,22 +102,26 @@ public class Banner implements Colorable {
     private Color baseColor;
     private Layer[] layers = new Layer[NUM_LAYERS];
 
-    public Banner(Color baseColor) {
+    public Banner(Color baseColor)
+    {
         this.baseColor = baseColor;
 
         for (int i = 0; i < NUM_LAYERS; i++)
             layers[i] = new Layer(Style.BLANK, baseColor);
     }
 
-    public void setColor(Color color) {
+    public void setColor(Color color)
+    {
         this.baseColor = color;
     }
 
-    public Color getColor() {
+    public Color getColor()
+    {
         return baseColor;
     }
 
-    public void draw(Graphics g, int x, int y) {
+    public void draw(Graphics g, int x, int y)
+    {
         g.setColor(baseColor);
         g.fillRect(x, y, 200, 400);
         g.setColor(Banner.MASK);
@@ -123,7 +134,8 @@ public class Banner implements Colorable {
             layers[i].draw(g, x, y);
     }
 
-    public Layer getLayer(int i) {
+    public Layer getLayer(int i)
+    {
         return layers[i];
     }
 

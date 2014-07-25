@@ -4,10 +4,12 @@ import javax.swing.JPanel;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-public class BannerEditor extends JPanel {
+public class BannerEditor extends JPanel
+{
     private BannerMaker parent;
 
-    public BannerEditor(BannerMaker parent) {
+    public BannerEditor(BannerMaker parent)
+    {
         setPreferredSize(new Dimension(550, 500));
 
         this.parent = parent;
@@ -38,7 +40,8 @@ public class BannerEditor extends JPanel {
         add(panel);
 
 
-        for (i = 0; i < Banner.NUM_LAYERS; i++) {
+        for (i = 0; i < Banner.NUM_LAYERS; i++)
+        {
             add(new JLabel("Layer " + (i + 1) + ":"));
 
             styleBox = new JComboBox(Banner.Style.values());

@@ -1,22 +1,26 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Layer implements Colorable, Styleable {
+public class Layer implements Colorable, Styleable
+{
     private Banner.Style style;
     private Color color;
 
-    public Layer(Banner.Style style, Color color) {
+    public Layer(Banner.Style style, Color color)
+    {
         this.style = style;
         this.color = color;
     }
 
-    public void draw(Graphics g, int x, int y) {
+    public void draw(Graphics g, int x, int y)
+    {
         g.setColor(color);
 
         int i;
         int j;
 
-        switch (style) {
+        switch (style)
+        {
             case BLANK:
                 break;
             case UPPER_LEFT_SQUARE:
@@ -118,7 +122,8 @@ public class Layer implements Colorable, Styleable {
                 g.fillRect(x + 190, y + 340, 10, 50);
                 g.fillRect(x + 170, y + 390, 30, 10);
                 g.setColor(getMaskColor(color));
-                for (i = 0; i < 17; i++) {
+                for (i = 0; i < 17; i++)
+                {
                     g.fillRect(x + 10 * i, y + 60 + 20 * i, 10, 20);
                     g.fillRect(x + 30 + 10 * i, y + 20 * i, 10, 20);
                 }
@@ -132,13 +137,15 @@ public class Layer implements Colorable, Styleable {
                 g.fillRect(x, y + 340, 10, 50);
                 g.fillRect(x, y + 390, 30, 10);
                 g.setColor(getMaskColor(color));
-                for (i = 0; i < 17; i++) {
+                for (i = 0; i < 17; i++)
+                {
                     g.fillRect(x + 190 - 10 * i, y + 60 + 20 * i, 10, 20);
                     g.fillRect(x + 160 - 10 * i, y + 20 * i, 10, 20);
                 }
                 break;
             case SMALL_STRIPES:
-                for (i = 0; i < 4; i++) {
+                for (i = 0; i < 4; i++)
+                {
                     g.setColor(color);
                     g.fillRect(x + 20 + 50 * i, y, 10, 400);
                     g.setColor(Banner.MASK);
@@ -151,7 +158,8 @@ public class Layer implements Colorable, Styleable {
                 break;
             case CROSS:
                 j = 0;
-                for (i = 0; i < 19; i++) {
+                for (i = 0; i < 19; i++)
+                {
                     j = 180 - Math.abs(180 - 20 * i);
                     g.fillRect(x + 10 * i, y + j, 20, 40);
                     g.fillRect(x + 10 * i, y + 360 - j, 20, 40);
@@ -160,14 +168,16 @@ public class Layer implements Colorable, Styleable {
                 g.setColor(getMaskColor(color));
 
                 j = 0;
-                for (i = 0; i < 16; i++) {
+                for (i = 0; i < 16; i++)
+                {
                     j = 150 - Math.abs(150 - 20 * i);
                     g.fillRect(x + 20 + 10 * i, y + j, 10, 20);
                     g.fillRect(x + 20 + 10 * i, y + 380 - j, 10, 20);
                 }
 
                 j = 0;
-                for (i = 0; i < 16; i++) {
+                for (i = 0; i < 16; i++)
+                {
                     j = 75 - Math.abs(75 - 10 * i);
                     g.fillRect(x + j, y + 40 + 20 * i, 10, 20);
                     g.fillRect(x + 190 - j, y + 40 + 20 * i, 10, 20);
@@ -351,16 +361,20 @@ public class Layer implements Colorable, Styleable {
                 g.fillRect(x + 190, y + 210, 10, 80);
                 break;
             case BOTTOM_TRIANGLE:
-                for (i = 0; i < 10; i++) {
+                for (i = 0; i < 10; i++)
+                {
                     g.setColor(color);
                     g.fillRect(x + 10 * i, y + 390 - 20 * i,
                             20 * (10 - i), 10 + 20 * i);
                     g.setColor(getMaskColor(color));
-                    if (i < 9) {
+                    if (i < 9)
+                    {
                         g.fillRect(x + 10 * i, y + 370 - 20 * i, 10, 20);
                         g.fillRect(x + 190 - 10 * i, y + 370 - 20 * i,
                                 10, 20);
-                    } else {
+                    }
+                    else
+                    {
                         g.fillRect(x + 10 * i, y + 380 - 20 * i, 10, 10);
                         g.fillRect(x + 190 - 10 * i, y + 380 - 20 * i,
                                 10, 10);
@@ -370,16 +384,20 @@ public class Layer implements Colorable, Styleable {
                 g.fillRect(x, y + 390, 200, 10);
                 break;
             case TOP_TRIANGLE:
-                for (i = 0; i < 10; i++) {
+                for (i = 0; i < 10; i++)
+                {
                     g.setColor(color);
                     g.fillRect(x + 10 * i, y,
                             20 * (10 - i), 10 + 20 * i);
                     g.setColor(getMaskColor(color));
-                    if (i < 9) {
+                    if (i < 9)
+                    {
                         g.fillRect(x + 10 * i, y + 10 + 20 * i, 10, 20);
                         g.fillRect(x + 190 - 10 * i, y + 10 + 20 * i,
                                 10, 20);
-                    } else {
+                    }
+                    else
+                    {
                         g.fillRect(x + 10 * i, y + 10 + 20 * i, 10, 10);
                         g.fillRect(x + 190 - 10 * i, y + 10 + 20 * i,
                                 10, 10);
@@ -390,7 +408,8 @@ public class Layer implements Colorable, Styleable {
                 break;
             case BOTTOM_SAW:
                 g.fillRect(x, y + 390, 200, 10);
-                for (i = 0; i < 3; i++) {
+                for (i = 0; i < 3; i++)
+                {
                     g.setColor(color);
                     g.fillRect(x + 70 * i, y + 380, 60, 20);
                     g.fillRect(x + 10 + 70 * i, y + 360, 40, 20);
@@ -409,7 +428,8 @@ public class Layer implements Colorable, Styleable {
                 break;
             case TOP_SAW:
                 g.fillRect(x, y, 200, 10);
-                for (i = 0; i < 3; i++) {
+                for (i = 0; i < 3; i++)
+                {
                     g.setColor(color);
                     g.fillRect(x + 70 * i, y, 60, 20);
                     g.fillRect(x + 10 + 70 * i, y + 20, 40, 20);
@@ -461,15 +481,18 @@ public class Layer implements Colorable, Styleable {
                 g.fillRect(x + 50, y + 190, 100, 20);
                 break;
             case RHOMBUS:
-                for (i = 0; i < 7; i++) {
+                for (i = 0; i < 7; i++)
+                {
                     g.setColor(getMaskColor(color));
-                    if (i < 6) {
+                    if (i < 6)
+                    {
                         g.fillRect(x + 30 + 10 * i, y + 190 - 20 * i,
                                 140 - 20 * i, 20 + 40 * i);
                         g.setColor(color);
                         g.fillRect(x + 40 + 10 * i, y + 190 - 20 * i,
                                 120 - 20 * i, 20 + 40 * i);
-                    } else
+                    }
+                    else
                         g.fillRect(x + 90, y + 80, 20, 240);
                 }
                 break;
@@ -508,10 +531,12 @@ public class Layer implements Colorable, Styleable {
                 break;
             case BRICKS:
                 int offset;
-                for (i = 0; i < 10; i++) {
+                for (i = 0; i < 10; i++)
+                {
                     offset = i % 2 * 30;
 
-                    for (j = 0; j < 4; j++) {
+                    for (j = 0; j < 4; j++)
+                    {
                         g.setColor(getMaskColor(color));
                         g.fillRect(x + 60 * j - offset, y + i * 40, 50, 30);
                         g.setColor(color);
@@ -526,7 +551,8 @@ public class Layer implements Colorable, Styleable {
                 g.fillRect(x + 200, y, 30, 400);
                 break;
             case GRADIENT:
-                for (i = 0; i < 40; i++) {
+                for (i = 0; i < 40; i++)
+                {
                     g.setColor(new Color(
                             color.getRed(), color.getGreen(), color.getBlue(),
                             (int) ((40 - i) / 40.0 * 255)));
@@ -740,30 +766,36 @@ public class Layer implements Colorable, Styleable {
         }
     }
 
-    public void setStyle(Banner.Style newStyle) {
+    public void setStyle(Banner.Style newStyle)
+    {
         this.style = newStyle;
     }
 
-    public Banner.Style getStyle() {
+    public Banner.Style getStyle()
+    {
         return style;
     }
 
-    public void setColor(Color newColor) {
+    public void setColor(Color newColor)
+    {
         this.color = newColor;
     }
 
-    public Color getColor() {
+    public Color getColor()
+    {
         return color;
     }
 
-    private Color getMaskColor(Color color) {
+    private Color getMaskColor(Color color)
+    {
         return new Color(color.getRed(),
                 color.getGreen(),
                 color.getBlue(),
                 180);
     }
 
-    public String toString() {
+    public String toString()
+    {
         return "Style: " + style + "  Color: " + color;
     }
 }
