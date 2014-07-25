@@ -1,6 +1,7 @@
 all: BannerMaker.jar
 
 bin/BannerMaker.class: src/*.java
+	mkdir -p bin
 	javac -source 1.6 -target 1.6 -d bin src/*.java
 
 BannerMaker.jar: bin/BannerMaker.class
