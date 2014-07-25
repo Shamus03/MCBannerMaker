@@ -52,7 +52,6 @@ class BannerEditor extends JPanel
         int i;       
         setLayout(new GridLayout(3 + Banner.NUM_LAYERS, 1));
 
-
         add(new JPanel());
         add(new JLabel("Style"));
         add(new JLabel("Color"));
@@ -101,11 +100,11 @@ class BannerEditor extends JPanel
         buttonPanel.add(btnReset);
         btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				comboBox.setSelectedIndex(15);
+				comboBox.setSelectedIndex(Banner.BannerColor.WHITE.ordinal()); 
 				for (int i = 0; i < Banner.NUM_LAYERS; i++)		
 				{
-					layerStyles[i].setSelectedIndex(0);
-					layerColors[i].setSelectedIndex(0);					
+					layerStyles[i].setSelectedIndex(Banner.Style.BLANK.ordinal()); 
+					layerColors[i].setSelectedIndex(Banner.BannerColor.RED.ordinal());			
 				}
 			}
 		});
@@ -189,7 +188,7 @@ class Banner implements Colorable
         }
     }
 
-    static final Color MASK = new Color(0, 0, 0, 20);
+    static final Color MASK = new Color(0, 0, 0, 20); //adds alpha to banner
 
     static enum BannerColor
     {
@@ -254,15 +253,22 @@ class Banner implements Colorable
     public void draw(Graphics g, int x, int y)
     {
         g.setColor(baseColor);
-        g.fillRect(x, y, 200, 400);
+        g.fillRect(x, y, 200, 400); 
+
+        
+        for(int i = 0; i < NUM_LAYERS; i++)
+            layers[i].draw(g, x, y);
+        
+        drawBannerMask(g,x,y);
+    }
+    
+    public void drawBannerMask(Graphics g, int x, int y)
+    {
         g.setColor(Banner.MASK);
         g.fillRect(x, y, 200, 10);
         g.fillRect(x, y + 390, 200, 10);
         g.fillRect(x, y + 10, 10, 380);
         g.fillRect(x + 190, y + 10, 10, 380);
-
-        for(int i = 0; i < NUM_LAYERS; i++)
-            layers[i].draw(g, x, y);
     }
 
     public Layer getLayer(int i)
