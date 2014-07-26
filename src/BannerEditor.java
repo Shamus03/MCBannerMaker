@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.util.Random;
 
 public class BannerEditor extends JPanel
 {
@@ -72,21 +73,45 @@ public class BannerEditor extends JPanel
         }
         
         
-        JPanel buttonPanel = new JPanel();
+        JPanel resetPanel = new JPanel();
         JButton btnReset = new JButton("Reset Fields");
-        buttonPanel.add(btnReset);
-        btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+        resetPanel.add(btnReset);
+        btnReset.addActionListener(new ActionListener()
+        {
+			public void actionPerformed(ActionEvent e)
+            {
 				comboBox.setSelectedIndex(Banner.BannerColor.WHITE.ordinal()); 
 				for (int i = 0; i < Banner.NUM_LAYERS; i++)		
 				{
-					layerStyles[i].setSelectedIndex(Banner.Style.BLANK.ordinal()); 
-					layerColors[i].setSelectedIndex(Banner.BannerColor.RED.ordinal());			
+					layerStyles[i].setSelectedIndex(
+                        Banner.Style.BLANK.ordinal()); 
+					layerColors[i].setSelectedIndex(
+                        Banner.BannerColor.RED.ordinal());			
 				}
 			}
 		});
-        
-        add(buttonPanel);
+        add(resetPanel);
+
+        JPanel randomPanel = new JPanel();
+        JButton btnRandom = new JButton("Randomize");
+        randomPanel.add(btnRandom);
+        btnRandom.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                Random rand = new Random();
+                comboBox.setSelectedIndex(
+                    rand.nextInt(Banner.BannerColor.values().length));
+				for (int i = 0; i < Banner.NUM_LAYERS; i++)		
+				{
+					layerStyles[i].setSelectedIndex(
+                        rand.nextInt(Banner.Style.values().length)); 
+					layerColors[i].setSelectedIndex(
+                        rand.nextInt(Banner.BannerColor.values().length));
+				}
+            }
+        });
+        add(randomPanel);
     }
 
 }
